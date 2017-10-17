@@ -1,22 +1,33 @@
 package parcial.edu.co.co;
 
 import java.awt.GridBagConstraints;
+
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import parcial.edu.co.co.Medallistas;
 
 public class Izquierdo extends JPanel{
 	public JLabel icono,registro,nom,ape,tipo,num,edad,peso,alt,cel,dir,pues;
 	public JTextField nom2,ape2,num2,edad2,peso2,alt2,cel2,dir2;
 	public JComboBox tipo2,pues2;
 	public JButton agregar;
+	public String nombre,apellido,direccion,tipo3,puesto,selecTip,selecPues;
+	public int numero,edad3,peso3,celular;
+	public double altura;
+	ArrayList<Medallistas> lista= new ArrayList<Medallistas>();
 	
 	public Izquierdo() {
 		this.setLayout(new GridBagLayout());
@@ -204,6 +215,64 @@ public class Izquierdo extends JPanel{
         cons.insets = insets;
         agregar=new JButton("Agregar");
         this.add(agregar,cons);
+        
+        agregar.addActionListener (new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				try {
+					nombre=((String)nom2.getText());
+					apellido=((String)ape2.getText());
+					numero=Integer.parseInt(num2.getText());
+					edad3=Integer.parseInt(edad2.getText());
+					peso3=Integer.parseInt(peso2.getText());
+					celular=Integer.parseInt(cel2.getText());
+					altura=Double.parseDouble(alt2.getText());
+					direccion=((String)dir2.getText());
+					selecTip = (String)tipo2.getSelectedItem();
+					selecPues=(String)pues2.getSelectedItem();
+					
+				}catch(Exception a) {
+					JOptionPane.showMessageDialog(null, "dato no valido"); 
+				}finally {
+					switch(selecTip){
+						case "Cedula":
+							tipo3=selecTip;
+							break;
+						case "Tarjeta de identidad":
+							tipo3=selecTip;
+							break;
+						case "Registro civil":
+							tipo3=selecTip;
+							break;
+						case "Pasaporte":
+							tipo3=selecTip;
+							break;
+					}
+					
+					switch(selecPues) {
+						case "Primer Lugar":
+							puesto=selecPues;
+							break;
+						case "Segundo Lugar":
+							puesto=selecPues;
+							break;
+						case "Tercer Lugar":
+							puesto=selecPues;
+							break;
+					}
+					
+					lista.add(new Medallistas(nombre,apellido,tipo3,numero,edad3,peso3,altura,celular,direccion,puesto));
+					System.out.println(lista);
+					nom2.setText("");
+					ape2.setText("");
+					num2.setText("");
+					edad2.setText("");
+					peso2.setText("");
+					alt2.setText("");
+					cel2.setText("");
+					dir2.setText("");
+				}
+			}
+		});
 	}
 	
 }
